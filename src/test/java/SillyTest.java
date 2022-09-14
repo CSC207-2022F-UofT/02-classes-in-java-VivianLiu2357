@@ -34,13 +34,19 @@ public class SillyTest {
         return bos.toString().split("\n");
     }
 
-    @Test(timeout = 50)
+    @Test(timeout = 100)
     public void testTask1() {
         Silly sample = new Silly("a", "b");
         assertEquals("ab", sample.name);
 
         Silly sample2 = new Silly("first", "second");
         assertEquals("firstsecond", sample2.name);
+
+        Silly sample3 = new Silly("", "Silly");
+        assertEquals("Silly", sample3.name);
+
+        Silly sample4 = new Silly ("123", "---");
+        assertEquals("123---", sample4.name);
     }
 
     @Test(timeout = 50)
@@ -56,10 +62,12 @@ public class SillyTest {
         Silly a = new Silly(1);
         Silly b = new Silly(3);
         Silly c = new Silly("my name");
+        Silly d = new Silly(" ");
 
         assertEquals("Silly #1", a.toString());
         assertEquals("Silly #3", b.toString());
         assertEquals("my name", c.toString());
+        assertEquals(" ",d.toString());
     }
 
     @Test(timeout = 50)
@@ -67,21 +75,31 @@ public class SillyTest {
         Silly a = new Silly(1);
         Silly b = new Silly("Silly #1");
         Silly c = new Silly("my name");
+        Silly d = new Silly("my name");
 
         assertTrue(a.equals(b));
         assertTrue(b.equals(a));
         assertFalse(c.equals(a));
+        assertFalse(c.equals(b));
+        assertTrue(c.equals(d));
     }
 
-    @Test(timeout = 50)
+    @Test(timeout = 100)
     public void testTask5() {
         Silly base = new Silly(1);
         Silly equal = new Silly("Silly #1");
         Silly shorter = new Silly("short");
         Silly longer = new Silly("very very very long");
+        Silly equal2 = new Silly("Silly #2");
 
         assertTrue(base.compareTo(equal) == 0);
         assertTrue(base.compareTo(shorter) > 0);
         assertTrue(base.compareTo(longer) < 0);
+
+        assertTrue(base.compareTo(equal2) == 0);
+        assertTrue(equal.compareTo(equal2) == 0);
+        assertTrue(equal2.compareTo(shorter) > 0);
+        assertTrue(shorter.compareTo(longer) < 0);
+
     }
 }
